@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobsy | Login</title>
+
+```
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f0f4ff;
+    }
+
+    .login-container {
+        display: flex;
+        width: 850px;
+        min-height: 520px;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .login-left {
+        width: 45%;
+        background: linear-gradient(135deg, #123c87, #2563eb);
+        color: white;
+        padding: 45px 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .login-left h1 {
+    .login-left p {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+        font-size: 15px;
+        line-height: 1.7;
+        color: #e0eaff;
+    }
+
+    .login-right {
+        width: 55%;
+        padding: 55px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .logo {
+        color: #2563eb;
+        font-size: 30px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .login-right h2 {
+        text-align: center;
+        color: #172b4d;
+        margin-bottom: 10px;
+        font-size: 27px;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: #718096;
+        margin-bottom: 30px;
+        font-size: 14px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        color: #26354d;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    input {
+        width: 100%;
+        padding: 13px;
+        border: 1px solid #dce3ef;
+        border-radius: 8px;
+        margin-bottom: 22px;
+        outline: none;
+        font-size: 14px;
+    }
+
+    input:focus {
+        border-color: #2563eb;
+    }
+
+    .password-box {
+        position: relative;
+    }
+
+    .password-box input {
+        padding-right: 60px;
+    }
+
+    .show-password {
+        position: absolute;
+        right: 10px;
+        top: 12px;
+        border: none;
+        background: none;
+        color: #2563eb;
+        cursor: pointer;
+    }
+
+    .login-btn {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 8px;
+        background: #2563eb;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .login-btn:hover {
+        background: #1749b5;
+    }
+
+    .register {
+        text-align: center;
+        margin-top: 25px;
+        color: #718096;
+        font-size: 14px;
+    }
+
+    .register a {
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    #error {
+        color: #c62828;
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+
+    @media (max-width: 700px) {
+        .login-container {
+            width: 95%;
+            min-height: auto;
+        }
+
+        .login-left {
+            display: none;
+        }
+
+        .login-right {
+            width: 100%;
+            padding: 35px 25px;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<div class="login-container">
+
+    <div class="login-left">
+        <h1>Welcome to Jobsy</h1>
+        <p>
+            Find your future. Build your career.
+            Discover government job opportunities
+            that match your qualifications and get
+            notified about eligible jobs.
+        </p>
+    </div>
+
+    <div class="login-right">
+
+        <div class="logo">Jobsy</div>
+
+        <h2>Welcome Back!</h2>
+        <p class="subtitle">Login to your Jobsy account</p>
+
+        <form id="loginForm">
+
+            <label for="email">Email Address</label>
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                required
+            >
+
+            <label for="password">Password</label>
+            <div class="password-box">
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                >
+                <button
+                    type="button"
+                    class="show-password"
+                    onclick="togglePassword()"
+                >Show</button>
+            </div>
+
+            <p id="error"></p>
+
+            <button type="submit" class="login-btn">
+                Login
+            </button>
+
+        </form>
+
+        <p class="register">
+            Don't have an account?
+            <a href="Register.html">Register Now</a>
+        </p>
+
+    </div>
+</div>
+
+<script>
+    function togglePassword() {
+        const password = document.getElementById("password");
+        const button = document.querySelector(".show-password");
+
+        if (password.type === "password") {
+            password.type = "text";
+            button.textContent = "Hide";
+        } else {
+            password.type = "password";
+            button.textContent = "Show";
+        }
+    }
+
+    document.getElementById("loginForm").addEventListener("submit",
+        async function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const error = document.getElementById("error");
+
+            error.textContent = "";
+
+            try {
+                const response = await fetch(
+                    "http://localhost:8080/api/users/login",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ email, password })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || "Invalid email or password");
+                }
+
+                if (data.token) {
+                    localStorage.setItem("token", data.token);
+                }
+
+                window.location.href = "Jobs.html";
+
+            } catch (err) {
+                error.textContent =
+                    err.message || "Unable to connect to server";
+            }
+        }
+    );
+</script>
+```
+
+</body>
+</html>
